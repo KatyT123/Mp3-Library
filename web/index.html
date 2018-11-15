@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src=check.js></script>
+        <script>
+                var allowsubmit = false;
+		$(function(){
+			$('#confirm_password').keyup(function(e){
+				//get values 
+				var pass = $('#password').val();
+				var confpass = $(this).val();
+				if(pass == confpass){
+					//if both are same remove the error and allow to submit
+					$('.error').text('');
+					allowsubmit = true;
+				}else{
+					//if not matching show error and not allow to submit
+					$('.error').text('Password not matching');
+					allowsubmit = false;
+				}
+			});
+			
+			//jquery form submit
+			$('#form').submit(function(){
+			
+				var pass = $('#password').val();
+				var confpass = $('#confirm_password').val();
+ 
+				//just to make sure once again during submit
+				//if both are true then only allow submit
+				if(pass == confpass){
+			               allowsubmit = true;
+				}
+				if(allowsubmit){
+					return true;
+				}else{
+					return false;
+				}
+			});
+		});    
+                    
+        </script>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+              .center {
+                margin: auto;
+                width: 50%;
+                padding: 10px;
+              }
+              body  {
+            	background-image: url(back1.jpg);
+                background-size: cover;
+            }
+            
+
+         </style>
+    </head>
+    <body>
+        <h1 class="center">    Mp3 library</h1>
+        <div class="center"><h2>Upload your Mp3's here</h2></div>
+        
+        <form action="NewServlet" method="post" enctype="multipart/form-data" class="center" >
+           
+           <input type="file" id="myfile" name="myfile" value="Choose file" />
+          <input type="submit" value="Submit Button">
+        </form>
+        <div class="center"><h2>See the Mp3 table with Info and Lyrics</h2></div>
+         <form action="ShowDataTable" method="post" class="center">
+             <input type="submit" value="Show Library Content">
+         </form>
+        <img src="notes.png" alt="My Music" class="center"> 
+        <form id="form" >
+            <input type="password" id="password" value="password">
+            <input type="confirm_password" id="confirm_password" value="confirm_password">  
+                <div ><span class="error" style="color:red"></span><br /></div>
+                <input type="submit" id="submit" value="submit">
+        </form>
+        <!--enctype pliroforei to servlet oti tha parei arxeio-->
+    </body>
+</html>
