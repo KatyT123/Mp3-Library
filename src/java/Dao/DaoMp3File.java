@@ -22,7 +22,7 @@ public class DaoMp3File {
     
     public static ArrayList showTable(Connection con){
         
-        String sql = "Select title,artist,album,year,lyrics,image From mp3_files";
+        String sql = "Select title,artist,album,year,lyrics,image From files";
         PreparedStatement pst = null;
         ResultSet rs =null;
         ArrayList<Mp3File> mylist = new ArrayList<>(); 
@@ -54,7 +54,7 @@ public class DaoMp3File {
     
     public static boolean DeleteMp3(Connection con, String title,String artist){
          boolean flag = false;
-         String sql = "Delete From mp3_files Where title =? and artist=?";
+         String sql = "Delete From files Where title =? and artist=?";
          PreparedStatement pst = null;
          ResultSet rs =null;
          

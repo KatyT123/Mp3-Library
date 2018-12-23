@@ -43,7 +43,7 @@
                    <td><%= mp3.getAlbum()%></td>
                    <td><%= mp3.getYear()%></td>
                    <td><%= mp3.getLyrics()%></td>
-                   <td><a href="DeleteServlet?title=<%= mp3.getTitle() %>&artist=<%= mp3.getArtist() %>">click to delete</a></td>
+      <td><a href="DeleteServlet?title=<%= mp3.getTitle() %>&artist=<%= mp3.getArtist() %>">click to delete</a></td>
                 </tr>
               <%}%>
                 </tbody>

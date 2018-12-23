@@ -9,9 +9,6 @@ import com.beaglebuddy.mp3.MP3;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,22 +21,16 @@ public class Mp3Tags {
     }
     
     
-    public HashMap getTags(File f){
-        try {
-            MP3 mp3 = new MP3(f);
-            String album = mp3.getAlbum();
-            String band = mp3.getBand();
-            String title = mp3.getTitle();
-            String year = Integer.toString(mp3.getYear()); 
-            tags.put("album", album);
-            tags.put("band", band);
-            tags.put("title", title);
-            tags.put("year", year);
-            
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Mp3Tags.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public HashMap getTags(File f) throws IOException{
+        MP3 mp3 = new MP3(f);
+        String album = mp3.getAlbum();
+        String band = mp3.getBand();
+        String title = mp3.getTitle();
+        String year = Integer.toString(mp3.getYear());
+        tags.put("album", album);
+        tags.put("band", band);
+        tags.put("title", title);
+        tags.put("year", year);
          
         return tags;
     }
