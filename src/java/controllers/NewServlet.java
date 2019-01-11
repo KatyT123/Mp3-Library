@@ -6,9 +6,10 @@
 package controllers;
 
 
-import Dao.DbAccess;
-import Dao.Mp3Tags;
-import Dao.WebServiseLyrics;
+import dao.DbAccess;
+import static dao.InsertFileDao.InsertFileInDb;
+import dao.Mp3Tags;
+import dao.WebServiseLyrics;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -82,38 +83,17 @@ public class NewServlet extends HttpServlet {
   
         final Part filepart = request.getPart("myfile");
         final String filename = filepart.getSubmittedFileName();
-        
         filepart.write("C:\\Users\\Katy\\Desktop\\" + filename);
-        File f = new File("C:\\Users\\Katy\\Desktop\\" + filename);
-        
-        Mp3Tags mp = new Mp3Tags();
-        HashMap <String,String> tags = mp.getTags(f);
-        String lyrics = WebServiseLyrics.getLyrics(tags.get("band"), tags.get("title"));
-        
-        Connection con = DbAccess.getConnection();
-        String sql = "INSERT INTO mp3_files (file, title, album, artist, year, lyrics) VALUES (?,?,?,?,?,?)";
-        PreparedStatement pst = null;
-        try{
-              pst = con.prepareStatement(sql);
-              pst.setBlob(1, filepart.getInputStream());
-              pst.setString(2, tags.get("title"));
-              pst.setString(3, tags.get("album") );
-              pst.setString(4, tags.get("band"));
-              pst.setString(5, tags.get("year"));
-              pst.setString(6, lyrics);
-              pst.execute();
-              RequestDispatcher disp = request.getRequestDispatcher("uploaded.jsp");
-              disp.forward(request, response);
-              
-              pst.close();
+        File file = new File("C:\\Users\\Katy\\Desktop\\" + filename);
+        if(InsertFileInDb(filepart,file)){
+             RequestDispatcher disp = request.getRequestDispatcher("uploaded.jsp");
+             disp.forward(request, response);
+        }
+        else {
+            RequestDispatcher disp = request.getRequestDispatcher("errorPage.jsp");
+             disp.forward(request, response);
+        }
     
-        }  catch (SQLException ex) {
-            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }catch (IOException ex)
-         {
-            System.out.println("An error occurred while reading/saving the mp3 file.");
-            ex.printStackTrace();
-         }
     /**
      * Returns a short description of the servlet.
      *
@@ -136,5 +116,6 @@ public class NewServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    
 }

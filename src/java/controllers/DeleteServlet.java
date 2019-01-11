@@ -5,8 +5,8 @@
  */
 package controllers;
 
-import Dao.DaoMp3File;
-import Dao.DbAccess;
+import dao.DaoMp3File;
+import dao.DbAccess;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author KATY
+ * @author chern
  */
 public class DeleteServlet extends HttpServlet {
 
@@ -31,9 +31,9 @@ public class DeleteServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -62,16 +62,10 @@ public class DeleteServlet extends HttpServlet {
             throws ServletException, IOException {
         String title = request.getParameter("title");
         String artist = request.getParameter("artist");
-        
-        Connection con = DbAccess.getConnection();
-        boolean flag = DaoMp3File.DeleteMp3(con,title,artist);
-        if(flag = true){
+        if(DaoMp3File.DeleteMp3(title,artist)){
             RequestDispatcher disp = request.getRequestDispatcher("ShowDataTable.java");
             disp.forward(request, response);
-        }   
-        
-        
-        
+        }  
     }
 
     /**

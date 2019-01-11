@@ -5,10 +5,9 @@
  */
 package controllers;
 
-import Dao.DaoMp3File;
-import Dao.DbAccess;
+import dao.DaoMp3File;
+import dao.DbAccess;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -17,11 +16,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Mp3File;
+import model.Mp3File;
 
 /**
  *
- * @author KATY
+ * @author chern
  */
 @WebServlet(name = "ShowDataTable", urlPatterns = {"/ShowDataTable"})
 public class ShowDataTable extends HttpServlet {
@@ -69,8 +68,7 @@ public class ShowDataTable extends HttpServlet {
             throws ServletException, IOException {
          
          ArrayList<Mp3File> mylist = new ArrayList<>();
-         Connection con = DbAccess.getConnection();
-         mylist = DaoMp3File.showTable(con);
+         mylist = DaoMp3File.showTable();
          request.setAttribute("mylist", mylist);
          RequestDispatcher disp = request.getRequestDispatcher("libraryTable.jsp");
          disp.include(request, response);
